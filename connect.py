@@ -31,15 +31,16 @@ while True:
         if "RC7: Relay1 LOW" in message_text:
             print("Relay 1 is LOW - sending response")
             send_text = f"PI DETECTED RELAY LOW {int(time.time())}"
-        else:
+        elif "RC7: Relay1 HIGH":
             print("Relay 1 is HIGH - sending response")
             send_text = f"PI DETECTED RELAY HIGH {int(time.time())}"
         
+        if send_text != "":
+            # Send a high-priority status message
+            connection.mav.statustext_send(
+                mavutil.mavlink.MAV_SEVERITY_INFO,  # Higher priority
+                send_text.encode()  # Short, clear message
+            )
             
-        # Send a high-priority status message
-        connection.mav.statustext_send(
-            mavutil.mavlink.MAV_SEVERITY_WARNING,  # Higher priority
-            send_text.encode()  # Short, clear message
-        )
+            print("Response sent") 
         
-        print("Response sent")
