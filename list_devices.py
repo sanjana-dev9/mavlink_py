@@ -2,7 +2,7 @@ from pymavlink import mavutil
 import time
 
 # Connect to your MAVLink network
-connection = mavutil.mavlink_connection('/dev/ttyUSB0', baud=57600)
+connection = mavutil.mavlink_connection('/dev/ttyACM0', baud=115200)
 print("Listening for MAVLink components...")
 
 # Dictionary to store discovered systems
